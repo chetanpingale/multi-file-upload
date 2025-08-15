@@ -4,7 +4,9 @@ Access the deployed app here: [https://chetanpingale.github.io/multi-file-upload
 
 
 # Multi File Upload
+React Multi-File Uploader
 
+A React + Vite file uploader with drag-and-drop, queue, progress bars, retry, cancel, and Clear All. Supports images and PDFs (max 10MB) and persists queue metadata in sessionStorage.
 
 ## Setup Instructions
 
