@@ -1,6 +1,6 @@
 // Fake upload API
-export function uploadFile(file, { signal, onProgress }) {
-  return new Promise((resolve, reject) => {
+export function uploadFile(file: { size: any; }, { signal, onProgress }: { signal: AbortSignal; onProgress: (p: any) => void; }) {
+  return new Promise<void>((resolve, reject) => {
     const total = file.size;
     let uploaded = 0;
     const speed = 200000 + Math.random() * 300000; 

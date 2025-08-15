@@ -1,6 +1,6 @@
 # Live Demo
 
-Access the deployed app here: [https://chetanpingale.github.io/multi-file-uploader](https://chetanpingale.github.io/multi-file-uploader)
+Access the deployed app here: [https://chetanpingale.github.io/multi-file-upload](https://chetanpingale.github.io/multi-file-upload)
 
 
 # Multi File Upload

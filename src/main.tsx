@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter basename="/multi-file-uploader">
+  <BrowserRouter basename="/multi-file-upload">
     <App />
   </BrowserRouter>
 );

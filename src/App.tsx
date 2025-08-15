@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { uploadFile } from "./upload";
 import FileUploader from "./components/FileUploader";
 import FileItem from "./components/FileItem";
@@ -23,9 +23,9 @@ export default function App() {
     processQueue();
   }, [files, activeCount]);
 
-  const addFiles = (fileList) => {
-    const newItems = [];
-    Array.from(fileList).forEach((file) => {
+  const addFiles = (fileList: Iterable<unknown> | ArrayLike<unknown>) => {
+    const newItems: { id: string; file: unknown; name: any; size: any; type: any; status: string; progress: number; error: null; controller: null; preview: string | null; }[] = [];
+    Array.from(fileList).forEach((file: any) => {
       if (!ACCEPTED_TYPES.some((t) => file.type.startsWith(t))) {
         alert(`"${file.name}" rejected: Only images and PDFs allowed.`);
         return;
@@ -50,16 +50,16 @@ export default function App() {
           : null,
       });
     });
-    setFiles((prev) => [...prev, ...newItems]);
+    setFiles((prev: any) => [...prev, ...newItems]);
   };
 
-  const updateFile = (id, changes) => {
-    setFiles((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, ...changes } : f))
+  const updateFile = (id: any, changes: { status?: string; error?: any; controller?: AbortController | null; progress?: number; }) => {
+    setFiles((prev: any[]) =>
+      prev.map((f: { id: any; }) => (f.id === id ? { ...f, ...changes } : f))
     );
   };
 
-  const startUpload = async (item) => {
+  const startUpload = async (item: { id: any; file: { size: any; }; }) => {
     const controller = new AbortController();
     updateFile(item.id, { status: "uploading", error: null, controller });
     setActiveCount((c) => c + 1);
@@ -74,7 +74,7 @@ export default function App() {
         progress: 100,
         controller: null,
       });
-    } catch (err) {
+    } catch (err: any) {
       if (err.name === "AbortError") {
         updateFile(item.id, { status: "canceled", controller: null });
       } else {
@@ -91,21 +91,21 @@ export default function App() {
 
   const processQueue = () => {
     if (activeCount >= MAX_CONCURRENCY) return;
-    const next = files.find((f) => f.status === "queued");
+    const next = files.find((f: { status: string; }) => f.status === "queued");
     if (next) startUpload(next);
   };
 
-  const cancelUpload = (id) => {
-    const f = files.find((f) => f.id === id);
+  const cancelUpload = (id: any) => {
+    const f = files.find((f: { id: any; }) => f.id === id);
     if (f?.controller) f.controller.abort();
   };
 
-  const retryUpload = (id) => {
+  const retryUpload = (id: any) => {
     updateFile(id, { status: "queued", progress: 0, error: null });
   };
 
-  const removeFile = (id) => {
-    setFiles((prev) => prev.filter((f) => f.id !== id));
+  const removeFile = (id: any) => {
+    setFiles((prev: any[]) => prev.filter((f: { id: any; }) => f.id !== id));
   };
 
   return (
@@ -127,7 +127,7 @@ export default function App() {
             </tr>
           </thead>
           <tbody>
-            {files.map((file) => (
+            {files.map((file: any) => (
               <FileItem
                 key={file.id}
                 file={file}

@@ -1,11 +1,25 @@
-import React from "react";
+interface FileItemProps {
+  file: {
+    id: string;
+    name: string;
+    size: number;
+    type: string;
+    status: "uploading" | "success" | "failed" | "canceled";
+    error?: string;
+    progress: number;
+    preview?: string;
+  };
+  onCancel: (id: string) => void;
+  onRetry: (id: string) => void;
+  onRemove: (id: string) => void;
+}
 
 export default function FileItem({
   file,
   onCancel,
   onRetry,
   onRemove,
-}) {
+}: FileItemProps) {
   return (
     <tr>
       <td>{file.name}</td>

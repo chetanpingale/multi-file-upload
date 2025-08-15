@@ -1,12 +1,19 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
-export default function FileUploader({ onFilesAdded }) {
-  const fileInputRef = useRef();
+interface FileUploaderProps {
+  onFilesAdded: (files: FileList) => void;
+}
 
-  const handleSelect = (e) => onFilesAdded(e.target.files);
-  const handleDrop = (e) => {
+export default function FileUploader({ onFilesAdded }: FileUploaderProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onFilesAdded(e.target.files as FileList);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    onFilesAdded(e.dataTransfer.files);
+    onFilesAdded(e.dataTransfer.files as FileList);
   };
 
   return (
