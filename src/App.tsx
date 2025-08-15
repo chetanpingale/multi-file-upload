@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { uploadFile } from "./upload";
 import FileUploader from "./components/FileUploader";
 import FileItem from "./components/FileItem";
@@ -14,6 +14,8 @@ export default function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [activeCount, setActiveCount] = useState(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   useEffect(() => {
     sessionStorage.setItem("uploadQueue", JSON.stringify(files));
@@ -108,10 +110,30 @@ export default function App() {
     setFiles((prev: any[]) => prev.filter((f: { id: any; }) => f.id !== id));
   };
 
+  const clearAllFiles = () => {
+    setFiles([]);
+    sessionStorage.removeItem("uploadQueue");
+    setActiveCount(0); 
+    if (fileInputRef.current) {
+      fileInputRef.current!.value = "";
+    }
+  };
+
   return (
     <div style={{ padding: 20, fontFamily: "sans-serif" }}>
       <h1>File Upload Queue</h1>
-      <FileUploader onFilesAdded={addFiles} />
+      <FileUploader onFilesAdded={addFiles} inputRef={fileInputRef}/>
+      {files.length > 0 && (
+        <div style={{ margin: "1rem 0" }}>
+          <button
+            onClick={clearAllFiles}
+            aria-label="Remove all files from the upload queue"
+            style={{ background: "#dc3545", color: "#fff", padding: "0.5rem 1rem", border: "none", borderRadius: "4px", cursor: "pointer" }}
+          >
+            Clear All
+          </button>
+        </div>
+      )}
       {files.length > 0 && (
         <table
           style={{ marginTop: 20, borderCollapse: "collapse", width: "100%" }}

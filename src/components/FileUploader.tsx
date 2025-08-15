@@ -1,11 +1,11 @@
-import { useRef } from "react";
 
 interface FileUploaderProps {
   onFilesAdded: (files: FileList) => void;
+  inputRef: React.RefObject<HTMLInputElement>;
+
 }
 
-export default function FileUploader({ onFilesAdded }: FileUploaderProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+export default function FileUploader({ onFilesAdded, inputRef }: FileUploaderProps) {
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFilesAdded(e.target.files as FileList);
@@ -34,7 +34,7 @@ export default function FileUploader({ onFilesAdded }: FileUploaderProps) {
         type="file"
         multiple
         onChange={handleSelect}
-        ref={fileInputRef}
+        ref={inputRef}
         style={{ display: "block", marginTop: "0.5rem" }}
       />
     </div>
